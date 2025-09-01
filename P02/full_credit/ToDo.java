@@ -20,10 +20,19 @@ public class ToDo{
             System.out.print("Priority from 1(highest) to 5(lowest): " ) ;
             list[i].priority=scanner.nextInt();
             scanner.nextLine();
+        }
 
+        for (int i=0;i<=5;i++)
+        {
+            for (int j=0;j<n;j++)
+            {
+                if(i==list[j].priority)
+                {
+                    System.out.println(i+" " + list[j].task);
+                }
+            }
         }
         
-
 
         
     }
