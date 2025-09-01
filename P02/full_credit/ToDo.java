@@ -33,7 +33,7 @@ public class ToDo{
             }
         }
         
-
+        scanner.close();
         
     }
 }
