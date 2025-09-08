@@ -1,14 +1,13 @@
 
 import java.util.Scanner;
+import java.nio.channels.Pipe.SourceChannel;
 import java.util.Random;
 
 public class FlashCards {
     private static Scanner scanner = new Scanner(System.in);
     private static Random random = new Random();
-
-    // loadDeck returns an array of Card filled with our vocab words for Exam #1.
-    // You MUST provide Card.java correctly for this to compile and run!
     private static final int numCards = 27;
+
     private static Card[] loadDeck() {
         Card[] cards = new Card[numCards];
         int i = 0;
@@ -43,8 +42,19 @@ public class FlashCards {
     }
     
     public static void main(String[] args) {
- 
-        // Write your main program here! See P03_Requirements.pdf for details.
+    
+        Card[] deck=loadDeck()
+        System.out.println("FLASHCARDS");
+        System.out.println(====================);
+        System.out.println("Vocabulary terms:");
+
+        for(Card c: deck){
+            System.out.println(c.getTerm());
+        }
+        while(true){
+            Card card=deck[random.next.Int(deck.length)];
+            System.out.println("card");
+        }
     
     }
 }
