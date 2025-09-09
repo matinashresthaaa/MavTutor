@@ -1,6 +1,5 @@
 
 import java.util.Scanner;
-import java.nio.channels.Pipe.SourceChannel;
 import java.util.Random;
 
 public class FlashCards {
@@ -43,17 +42,35 @@ public class FlashCards {
     
     public static void main(String[] args) {
     
-        Card[] deck=loadDeck()
+        Card[] deck=loadDeck();
         System.out.println("FLASHCARDS");
-        System.out.println(====================);
+        System.out.println("===================");
         System.out.println("Vocabulary terms:");
+
 
         for(Card c: deck){
             System.out.println(c.getTerm());
         }
-        while(true){
-            Card card=deck[random.next.Int(deck.length)];
-            System.out.println("card");
+
+        boolean conquiz=true;
+
+        while(conquiz){
+            Card card=deck[random.nextInt(deck.length)];
+            System.out.println(card);
+            System.out.print("Which term matches this definition ('q' to exit)? ");
+            String reply=scanner.nextLine();
+
+            if(reply.equalsIgnoreCase("q")){
+                System.out.println("exit!!");
+                conquiz=false;
+            }
+
+            if(card.attempt(reply)){
+                System.out.println("Correct!");
+            } else{
+                System.out.println("No, the term is: "+card.getTerm());
+              
+            }       
         }
     
     }
