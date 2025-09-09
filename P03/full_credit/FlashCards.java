@@ -43,20 +43,26 @@ public class FlashCards {
     public static void main(String[] args) {
     
         Card[] deck=loadDeck();
+        System.out.println();
         System.out.println("FLASHCARDS");
         System.out.println("===================");
+        System.out.println();
         System.out.println("Vocabulary terms:");
+        System.out.println();
 
 
-        for(Card c: deck){
-            System.out.println(c.getTerm());
+        for(Card i: deck){
+            System.out.println(i.getTerm());
         }
-
+        System.out.println();
         boolean conquiz=true;
 
         while(conquiz){
             Card card=deck[random.nextInt(deck.length)];
             System.out.println(card);
+
+            System.out.println();
+
             System.out.print("Which term matches this definition ('q' to exit)? ");
             String reply=scanner.nextLine();
 
@@ -65,12 +71,16 @@ public class FlashCards {
                 conquiz=false;
             }
 
-            if(card.attempt(reply)){
+            else if(card.attempt(reply)){
                 System.out.println("Correct!");
+                System.out.println();
             } else{
                 System.out.println("No, the term is: "+card.getTerm());
+                System.out.println();
               
-            }       
+            }   
+            
+            
         }
     
     }
