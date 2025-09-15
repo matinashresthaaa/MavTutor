@@ -3,6 +3,16 @@ set separator none
 skinparam classAttributeIconSize 0
 hide circle
 
+class Polygon{
+    +MAX_SIDES : int <<final>>
+    -numSides : int
+    -points : Point[]
+    +addPoint(point : Point)
+    +perimeter() : double
+    +toString() : String <<override>>
+    -lineLength(p1 : Point, p2 : Point) : double
+}
+
 class Point{
     -x : double
     -y :double
@@ -13,5 +23,6 @@ class Point{
     +hashCode() : int <<override>>
     +toString() : String <<override>>
 }
+
 
 @enduml
