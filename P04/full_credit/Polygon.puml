@@ -4,13 +4,13 @@ skinparam classAttributeIconSize 0
 hide circle
 
 class Polygon{
-    +MAX_SIDES : int <<final>>
+    {static} +MAX_SIDES :  int <<final>>
     -numSides : int
     -points : Point[]
     +addPoint(point : Point)
     +perimeter() : double
     +toString() : String <<override>>
-    -lineLength(p1 : Point, p2 : Point) : double
+    {static} -lineLength(p1 : Point, p2 : Point) : double
 }
 
 class Point{
@@ -25,10 +25,13 @@ class Point{
 }
 
 class TestPolygon{
-    -in : Scanner
-    -rand :Random <<optional>>
-    +main(args : String[])
+   {static} -in : Scanner
+   {static} -rand :Random <<optional>>
+   {static}+main(args : String[])
 }
+
+Polygon - Point
+TestPolygon -- Polygon
 
 
 @enduml
