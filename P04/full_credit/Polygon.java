@@ -15,7 +15,7 @@ public class Polygon{
         }
 
         if(numSides>=MAX_SIDES){
-            throw new IllegalAccessException("Polygon is full");
+            throw new RuntimeException("Polygon is full");
         }
      points[numSides]=point;
      numSides++;
@@ -33,7 +33,27 @@ public class Polygon{
         return sum;
     }
 
-    
+
+    private static double lineLength(Point p1,Point p2){
+        double dx=p1.getX()-p2.getX();
+        double dy=p1.getY()-p2.getY();
+        return Math.sqrt(dx*dx+dy*dy);
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder result = new StringBuilder("Polygon[");
+        for(int i=0; i<numSides; i++){
+            result.append(points[i].toString());
+            if(i<numSides-1){
+                result.append(",");
+
+            }
+        }
+        result.append("]");
+        return result.toString();
+    }
+
 
     
 
