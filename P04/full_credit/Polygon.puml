@@ -1,0 +1,17 @@
+@startuml
+set separator none
+skinparam classAttributeIconSize 0
+hide circle
+
+class Point{
+    -x : double
+    -y :double
+    +Point(x : double, y : double)
+    +Point()
+    +getX() : double
+    +getY() : double
+    +hashCode() : int <<override>>
+    +toString() : String <<override>>
+}
+
+@enduml
