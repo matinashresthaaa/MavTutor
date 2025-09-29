@@ -42,11 +42,22 @@ public class Comment {
         return inReplyTo;
     }
 
-    
+    @Override
+    public String toString(){
+        StringBuilder sb= new StringBuilder();
+        sb.append("Comment by ").append(author.toString());
+        if(inReplyTo!=null){
+            sb.append("in reply to ").append(inReplyTo.author.toString());
+        }
 
-
-
-
+        if(!replies.isEmpty()){
+            sb.append("\nReplies:");
+            for(int i=0;i<replies.size();i++){
+            sb.append(" (").append(i).append(") ").append(replies.get(i).author.getName());
+            }
+        }
+        return sb.toString();
+    }
         
     }
 
