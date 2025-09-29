@@ -8,7 +8,7 @@ public class Person{
         if(name==null || name.isEmpty()){
             throw new IllegalArgumentException("Name is empty or null");
         }
-        if(enail==null || email.isEmpty()){
+        if(email==null || email.isEmpty()){
             throw new IllegalArgumentException("Email is empty or null");
         }
 
