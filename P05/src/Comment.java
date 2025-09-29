@@ -20,6 +20,37 @@ public class Comment {
     }
 
 
+    public void addReply(String text, Person author){
+        if(text==null || text.isEmpty()){
+            throw new IllegalArgumentException("Text must not be empty or null");
+        }
+        if(author==null){
+            throw new IllegalArgumentException("author must not be null");
+        }
+    }
+
+
+    public int numReplies(){
+            return replies.size();
+        }
+
+    public Comment getReply(int index){
+        return replies.get(index);
+    }
+
+    public Comment getInReplyTo(){
+        return inReplyTo;
+    }
 
     
-}
+
+
+
+
+        
+    }
+
+
+
+    
+
