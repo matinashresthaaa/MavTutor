@@ -24,7 +24,7 @@ public class Rating{
         for(int i = 0; i<stars; i++ ){
             sb.append("\u2605");
         }
-        for(int i = 0; i<5; i++ ){
+        for(int i = stars; i<5; i++ ){
             sb.append("\u2606");
         }
         return sb.toString();
