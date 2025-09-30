@@ -10,7 +10,7 @@ public class Comment {
         if(text==null || text.isEmpty()){
             throw new IllegalArgumentException("text is null or empty");
         }
-        if(author==null || author.isEmpty()){
+        if(author==null){
             throw new IllegalArgumentException("author is empty or null");
         }
         this.text=text;
@@ -64,4 +64,3 @@ public class Comment {
 
 
     
-
