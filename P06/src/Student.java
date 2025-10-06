@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Student extends Person{
-    private static int nextStudentID;
+    private static int nextStudentID=0;
     private int studentID;
     private ArrayList<Course> courses;
 
@@ -15,7 +15,7 @@ public class Student extends Person{
         courses.add(course);
     }
 
-    public void getCourses(){
+    public Course[] getCourses(){
         return courses.toArray(new Course[0]);
     }
 
