@@ -1,5 +1,5 @@
 public interface Rateable {
-    void addRatings(Rating rating);
+    void addRating(Rating rating);
     double getAverageRating();
     Rating[] getRatings();
     
