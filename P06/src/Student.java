@@ -19,3 +19,9 @@ public class Student extends Person{
         return courses.toArray(new Course[0]);
     }
 
+    @Override
+    public String toString(){
+        return super.toString().replace(")", ", #" + studentID + ")");
+    }
+    }
+
