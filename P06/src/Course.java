@@ -5,7 +5,7 @@ public class Course {
    private int number;
    
    public Course(String dept, int number){
-    if(dept ==null || (dept.length()!=3 && dept.length()!=4))
+    if(dept ==null || (dept.length()!=3 || dept.length()!=4))
     throw new InvalidCourseException(dept);
     if(number <1000 || number >9999)
     throw new InvalidCourseException(dept,number);
