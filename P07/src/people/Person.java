@@ -2,6 +2,7 @@ package people;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.List;
 
 import rating.Rateable;
 import rating.Rating;
@@ -9,7 +10,7 @@ import rating.Rating;
 public class Person implements Rateable{
     private String name;
     private String email;
-    private ArrayList <Rating> ratings=new ArrayList<>();
+    private List <Rating> ratings=new ArrayList<>();
 
 
     public Person(String name, String email){
