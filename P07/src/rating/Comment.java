@@ -1,6 +1,7 @@
 package rating;
 
 import java.util.ArrayList;
+import people.Person;
 
 public class Comment {
     private String text;
