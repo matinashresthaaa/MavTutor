@@ -1,7 +1,10 @@
 package people;
 
-import java.util.Objects;
 import java.util.ArrayList;
+import java.util.Objects;
+
+import rating.Rateable;
+import rating.Rating;
 
 public class Person implements Rateable{
     private String name;
