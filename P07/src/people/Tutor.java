@@ -1,5 +1,7 @@
 package people;
 
+import session.Course;
+
 public class Tutor{
     private String bio;
     private int ssn;
