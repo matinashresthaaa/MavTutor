@@ -2,7 +2,7 @@
 <project name="CSE1325" default="compile" basedir=".">
 
   <property name="appname" value="MavTutor"/>
-  <property name="author" value="Prof Rice"/>
+  <property name="author" value="Matina Shree Shrestha"/>
   <property name="license" value="Licensed as CC BY-SA International 4.0"/>
                          <!-- OR "All rights reserved."/> for proprietary builds. -->
   <property name="packages" value="people.*,session.*,rating.*"/> <!-- comma-separated, include .* on all -->
