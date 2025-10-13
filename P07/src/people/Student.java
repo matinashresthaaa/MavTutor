@@ -1,5 +1,6 @@
 package people;
 
+import session.Course;
 import java.util.ArrayList;
 
 public class Student extends Person{
