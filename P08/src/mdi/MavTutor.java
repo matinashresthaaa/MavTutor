@@ -29,10 +29,10 @@ public class MavTutor {
         tutors=new ArrayList<>();
         sessions=new ArrayList<>();
 
-    String title = "MAV TUTOR MENU \n==================\n";
+    String title = "\nMAV TUTOR MENU\n";
     String prompt = "Selection? ";
 
-    menu = new Menu(new Object[]{ title }, new Object[]{ "\n", prompt });
+    menu = new Menu(new Object[]{ title }, new Object[]{ this, "\n", prompt });
 
     menu.addMenuItem(new MenuItem("Create Course", new Runnable() {
         public void run() { newCourse(); }
@@ -96,6 +96,9 @@ public class MavTutor {
 
     @Override
 public String toString() {
+    if(view==null)
+        return "";
+        
     String title;
 
     if (view == courses) {
@@ -107,7 +110,7 @@ public String toString() {
     } else if (view == sessions) {
         title = "Sessions\n";
     } else {
-        title = "No view selected\n";
+        title= "No view selected\n";
     }
 
     return Menu.listToString(title, view,'•');
