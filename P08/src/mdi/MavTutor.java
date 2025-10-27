@@ -24,6 +24,7 @@ public class MavTutor {
     private ArrayList<Session> sessions;
 
     public MavTutor(){
+
         courses =new ArrayList<>();
         students=new ArrayList<>();
         tutors=new ArrayList<>();
@@ -139,9 +140,10 @@ public class MavTutor {
             while(index!=null){
              if (index < 0 || index >= courses.size()) {
             menu.result = new StringBuilder("\nInvalid Selection.");
-            return;
         } 
+            else{
             s.addCourse(courses.get(index));
+            }
             index = Menu.selectItemFromList("\nSelect another course (Enter to finish): ", courses);
         
     }
