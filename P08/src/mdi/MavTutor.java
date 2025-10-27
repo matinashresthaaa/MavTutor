@@ -154,9 +154,54 @@ public class MavTutor {
     }
 }
 
-        
-
     private void newSession(){
+        if(courses.isEmpty() || tutors.isEmpty() || students.isEmpty()){
+           menu.result= new StringBuilder("\n Error. No course,tutor,student exists");
+            return; 
+        }
+
+        Integer cIdx=Menu.selectItemFromList("\n Select course index: ",courses);
+        if(cIdx == null || cIdx < 0 || cIdx >= courses.size()) {
+            menu.result = new StringBuilder("\nInvalid Selection");
+            return;
+        }
+        Course course=courses.get(cIdx);
+
+        Integer tIdx=Menu.selectItemFromList("\n Select tutor index: ",tutors);
+        if (tIdx == null || tIdx < 0 || tIdx >= tutors.size()) {
+            menu.result = new StringBuilder("\nInvalid Selection");
+            return;
+    }
+    Tutor tutor = tutors.get(tIdx);
+
+    Session session = new Session(course, tutor);
+
+    String date = Menu.getString("Date: ");          // e.g., 2025-10-27
+    String time = Menu.getString("Start time: ");    // e.g., 14:00
+    Integer dur  = Menu.getInt("Duration (minutes): ");
+    session.setSchedule(date, time, dur);
+
+     while (true) {
+        Integer sIdx = Menu.selectItemFromList("\n Select student index: ", students);
+        if (sIdx == null){
+          sessions.add(session);
+          menu.result=new StringBuilder("\nSession added: "+session);
+        }
+
+        if (sIdx < 0 || sIdx >= students.size()) {
+            menu.result = new StringBuilder("\nInvalid Selection");
+            return;
+        }
+        session.addStudent(students.get(sIdx));
+
+        String more = Menu.getString("Select another student (Enter to finish): ");
+        if (more == null || more.isEmpty()){
+            sessions.add(session);
+            menu.result = new StringBuilder("\nSession added: " + session);
+            return;
+        }
+
+    }
 
     }
 
