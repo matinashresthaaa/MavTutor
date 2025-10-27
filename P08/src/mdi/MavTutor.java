@@ -24,6 +24,47 @@ public class MavTutor {
     private ArrayList<Session> sessions;
 
     public MavTutor(){
+        courses =new ArrayList<>();
+        students=new ArrayList<>();
+        tutors=new ArrayList<>();
+        sessions=new ArrayList<>();
+
+        this.view=courses;
+        
+    String title = "MAV TUTOR MENU \n==================\n";
+    String prompt = "Selection? ";
+
+    menu = new Menu(new Object[]{ title }, new Object[]{ "\n", prompt });
+
+    menu.addMenuItem(new MenuItem("Create Course", new Runnable() {
+        public void run() { newCourse(); }
+    }));
+    menu.addMenuItem(new MenuItem("Create Student", new Runnable() {
+        public void run() { newStudent(); }
+    }));
+    menu.addMenuItem(new MenuItem("Create Tutor", new Runnable() {
+        public void run() { newTutor(); }
+    }));
+    menu.addMenuItem(new MenuItem("Create Session", new Runnable() {
+        public void run() { newSession(); }
+    }));
+    menu.addMenuItem(new MenuItem("View Courses", new Runnable() {
+        public void run() { selectView(courses); }
+    }));
+    menu.addMenuItem(new MenuItem("View Students", new Runnable() {
+        public void run() { selectView(students); }
+    }));
+    menu.addMenuItem(new MenuItem("View Tutors", new Runnable() {
+        public void run() { selectView(tutors); }
+    }));
+    menu.addMenuItem(new MenuItem("View Sessions", new Runnable() {
+        public void run() { selectView(sessions); }
+    }));
+    menu.addMenuItem(new MenuItem("Quit", new Runnable() {
+        public void run() { quit(); }
+    }));
+        
+    menu.run();
 
     }
 
