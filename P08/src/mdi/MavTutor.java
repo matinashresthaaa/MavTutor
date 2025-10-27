@@ -32,7 +32,7 @@ public class MavTutor {
     String title = "\nMAV TUTOR MENU\n";
     String prompt = "Selection? ";
 
-    menu = new Menu(new Object[]{ title }, new Object[]{ this, "\n", prompt });
+    menu = new Menu(new Object[]{ title }, new Object[]{ "\n", prompt });
 
     menu.addMenuItem(new MenuItem("Create Course", new Runnable() {
         public void run() { newCourse(); }
@@ -75,10 +75,51 @@ public class MavTutor {
     }
 
     private void newCourse(){
+        String dept= Menu.getString("Department: ");
+        int num= Menu.getInt("Course number: ");
 
+        try{
+            Course c= new Course(dept,num);
+            if(courses.indexOf(c)<0){
+                courses.add(c);
+                menu.result.append("\nCourse added: "+c);   
+            }
+            else{
+            menu.result.append("\nCourse exists: "+c);  
+        }
     }
+    catch(InvalidCourseException e){
+        menu.result.append("\nInvalid Course: "+e.getMessage());   
+    }
+}
 
     private void newTutor(){
+        if(courses.isEmpty()){
+            menu.result= new StringBuilder("\n Error. No course exists");
+        }
+
+        String name=Menu.getString("Name: ");
+        String email= Menu.getString("Email: ");
+        String bio =Menu.getString("Bio: ");
+        int ssn= Menu.getInt("SSN: ");
+
+        Integer index=Menu.selectItemFromList("\n Selectt course index: ",courses);
+        if(index ==null || index<0 || index >=courses.size()){
+            menu.result=new StringBuilder("\n Invalid Selection");
+            return;
+        }
+
+        Course course=courses.get(index);
+
+        Tutor t= new Tutor(name,email,ssn,bio,course);
+        if(tutors.indexOf(t)<0){
+            tutors.add(t);
+            menu.result=new StringBuilder("\n Tutor added: "+t);
+        }
+        else{
+            menu.result=new StringBuilder("\n Tutor already exists: "+t);
+        }
+
 
     }
     
@@ -92,13 +133,14 @@ public class MavTutor {
 
     private void selectView(List <?> list){
         this.view=list;
+        menu.result.append(this.toString());
     }
 
     @Override
 public String toString() {
     if(view==null)
         return "";
-        
+
     String title;
 
     if (view == courses) {
