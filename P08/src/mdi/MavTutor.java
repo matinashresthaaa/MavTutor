@@ -29,8 +29,6 @@ public class MavTutor {
         tutors=new ArrayList<>();
         sessions=new ArrayList<>();
 
-        this.view=courses;
-
     String title = "MAV TUTOR MENU \n==================\n";
     String prompt = "Selection? ";
 
@@ -93,7 +91,26 @@ public class MavTutor {
     }
 
     private void selectView(List <?> list){
-
+        this.view=list;
     }
+
+    @Override
+public String toString() {
+    String title;
+
+    if (view == courses) {
+        title = "Courses\n";
+    } else if (view == students) {
+        title = "Students\n";
+    } else if (view == tutors) {
+        title = "Tutors\n";
+    } else if (view == sessions) {
+        title = "Sessions\n";
+    } else {
+        title = "No view selected\n";
+    }
+
+    return Menu.listToString(title, view,'•');
+}
 
 }
