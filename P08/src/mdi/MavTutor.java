@@ -96,6 +96,7 @@ public class MavTutor {
     private void newTutor(){
         if(courses.isEmpty()){
             menu.result= new StringBuilder("\n Error. No course exists");
+            return;
         }
 
         String name=Menu.getString("Name: ");
@@ -124,8 +125,36 @@ public class MavTutor {
     }
     
     private void newStudent(){
+         if(courses.isEmpty()){
+            menu.result= new StringBuilder("\n Error. No course exists");
+            return;
+        }
 
+        String name =Menu.getString("Name: ");
+        String email=Menu.getString("Email: ");
+        Student s= new Student(name,email);
+
+       
+           Integer index=Menu.selectItemFromList("\n Select course index: ",courses);
+            while(index!=null){
+             if (index < 0 || index >= courses.size()) {
+            menu.result = new StringBuilder("\nInvalid Selection.");
+            return;
+        } 
+            s.addCourse(courses.get(index));
+            index = Menu.selectItemFromList("\nSelect another course (Enter to finish): ", courses);
+        
     }
+
+    if (students.indexOf(s) < 0) {
+        students.add(s);
+        menu.result = new StringBuilder("\nStudent added: " + s);
+    } else {
+        menu.result = new StringBuilder("\nStudent already exists: " + s);
+    }
+}
+
+        
 
     private void newSession(){
 
@@ -138,8 +167,6 @@ public class MavTutor {
 
     @Override
 public String toString() {
-    if(view==null)
-        return "";
 
     String title;
 
