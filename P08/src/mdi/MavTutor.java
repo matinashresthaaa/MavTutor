@@ -30,7 +30,7 @@ public class MavTutor {
         sessions=new ArrayList<>();
 
         this.view=courses;
-        
+
     String title = "MAV TUTOR MENU \n==================\n";
     String prompt = "Selection? ";
 
@@ -73,7 +73,7 @@ public class MavTutor {
     }
 
     private void quit(){
-
+        menu.result=null;
     }
 
     private void newCourse(){
