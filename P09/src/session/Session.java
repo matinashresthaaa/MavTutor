@@ -3,6 +3,9 @@ package session;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Scanner;
+import java.io.PrintStream;
+
 import people.Tutor;
 import people.Student;
 
@@ -29,6 +32,27 @@ public class Session {
     public Session(Course course, Tutor tutor){
         this.course=course;
         this.tutor=tutor;
+    }
+
+    public Session(Scanner in){
+        this.course=new Course(in);
+        this.dates=new DateRange(in);
+        this.tutor=new Tutor(in);
+        int studentcount=Integer.parseInt(in.nextLine());
+        for(int i=0;i<studentcount;i++){
+            students.add(new Student(in));
+        }
+    }
+
+    public void save(PrintStream out){
+        course.save(out);
+        dates.save(out);
+        tutor.save(out);
+
+        out.println(students.size());
+        for(Student s :students){
+            s.save(out);
+        }
     }
 
     /**
