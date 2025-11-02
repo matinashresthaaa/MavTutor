@@ -1,7 +1,11 @@
 package people;
 
 import session.Course;
+
 import java.util.ArrayList;
+import java.io.PrintStream;
+import java.util.Scanner;
+
 
 public class Student extends Person{
     private static int nextStudentID=0;
@@ -14,7 +18,29 @@ public class Student extends Person{
         this.courses= new ArrayList<>();
     }
 
+    public Student(Scanner in){
+        super(in);
+        this.studentID=Integer.parseInt(in.nextLine());
+        nextStudentID=Integer.parseInt(in.nextLine());
+        int courseCount=Integer.parseInt(in.nextLine());
+        this.courses=new ArrayList<>();
+        for(int i=0;i<courseCount;++i){
+            this.courses.add(new Course(in));
+        }
+       
+    }
+
+    @Override
+    public void save(PrintStream out){
+        super.save(out);
+        out.println(studentID);
+        out.println(nextStudentID);
+        out.println(courses.size());
+        for(Course c :courses) c.save(out);
+    }
+
     public void addCourse(Course course){
+        if(!courses.contains(course));
         courses.add(course);
     }
 
