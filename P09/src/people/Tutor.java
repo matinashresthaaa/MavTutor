@@ -1,6 +1,8 @@
 package people;
 
 import session.Course;
+import java.io.PrintStream;
+import java.util.Scanner;
 
 public class Tutor extends Person {
     public static final int MIN_SSN = 001_01_0001;
@@ -16,6 +18,21 @@ public class Tutor extends Person {
         this.ssn = ssn;
         this.bio = bio;
         this.course = course;
+    }
+
+    public Tutor(Scanner in){
+        super(in);
+        this.ssn=Integer.parseInt(in.nextLine());
+        this.bio=in.nextLine();
+        this.course=new Course(in);
+    }
+
+    @Override
+    public void save(PrintStream out){
+        super.save(out);
+        out.println(bio);
+        out.println(ssn);
+        course.save(out);
     }
     public int getSSN() {
         return ssn;
