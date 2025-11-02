@@ -3,9 +3,12 @@ package people;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.List;
+import java.io.PrintStream;
 
 import rating.Rateable;
 import rating.Rating;
+
+import java.util.Scanner;
 
 public class Person implements Rateable{
     private String name;
@@ -23,6 +26,16 @@ public class Person implements Rateable{
 
         this.name=name;
         this.email=email;
+    }
+
+    public Person(Scanner in){
+        this.name=in.nextLine();
+        this.email=in.nextLine();
+    }
+
+    public void save (PrintStream out){
+        out.println(name);
+        out.println(email);
     }
 
     public String getName(){
