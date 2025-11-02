@@ -1,5 +1,7 @@
 package session;
 
+import java.io.PrintStream;
+import java.util.Scanner;
 /**
  * Stores date, start time and end time for a tutoring session using 24 hour time.
  * @author Matina Shree Shrestha
@@ -40,6 +42,18 @@ public class DateRange{
     this.date=date;
     this.startTime=startTime;
     this.endTime=add(startTime,duration);
+    }
+
+    public DateRange(Scanner in){
+        this.date=in.nextLine();
+        this.startTime=in.nextLine();
+        this.endTime=in.nextLine();
+    }
+
+    public void save(PrintStream out){
+        out.println(date);
+        out.println(startTime);
+        out.println(endTime);
     }
  /**
      *  calculates the minutes between start and end time.
