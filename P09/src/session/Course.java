@@ -2,6 +2,8 @@
 package session;
 
 import java.util.Objects;
+import java.io.PrintStream;
+import java.util.Scanner;
 
 /**
  * Create a course with department code and course number.
@@ -29,6 +31,16 @@ public class Course {
     throw new InvalidCourseException(dept,number);
     this.dept=dept;
     this.number=number;
+   }
+
+   public Course(Scanner in){
+    this.dept=in.nextLine();
+    this.number=in.nextInt();
+   }
+
+   public void save(java.io.PrintStream out){
+    out.println(dept);
+    out.println(number);
    }
 
    /**
