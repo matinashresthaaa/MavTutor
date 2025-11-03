@@ -2,6 +2,7 @@ package mdi;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,9 +148,9 @@ public class MavTutor {
 
     }
 
-    private void open(){
-
-    }
+    private void open() {
+    
+}
 
 
     private void quit(){
@@ -207,26 +208,28 @@ public class MavTutor {
     }
     
     private void newStudent(){
-         if(courses.isEmpty()){
-            menu.result= new StringBuilder("\n Error. No course exists");
-            return;
+    if (courses.isEmpty()){
+        menu.result = new StringBuilder("\n Error. No course exists");
+        return;
+    }
+
+    String name  = Menu.getString("Name: ");
+    String email = Menu.getString("Email: ");
+    Student s = new Student(name, email);
+
+    String sel = Menu.getString("\n Select course index (Enter to finish): ");
+    int safety = 0;
+    while (sel != null && !sel.isEmpty()) {
+        try {
+            int idx = Integer.parseInt(sel.trim());
+            if (idx >= 0 && idx < courses.size()) s.addCourse(courses.get(idx));
+            else menu.result = new StringBuilder("\nInvalid Selection");
+        } catch (NumberFormatException e) {
+            menu.result = new StringBuilder("\nInvalid Selection");
         }
-
-        String name =Menu.getString("Name: ");
-        String email=Menu.getString("Email: ");
-        Student s= new Student(name,email);
-
-       
-           Integer index=Menu.selectItemFromList("\n Select course index: ",courses);
-            while(index!=null){
-             if (index < 0 || index >= courses.size()) {
-            menu.result = new StringBuilder("\nInvalid Selection.");
-        } 
-            else{
-            s.addCourse(courses.get(index));
-            }
-            index = Menu.selectItemFromList("\nSelect another course (Enter to finish): ", courses);
-        
+        if (s.getCourses().length >= courses.size()) break;
+        if (++safety > 1000) break;
+        sel = Menu.getString("\n Select another course index (Enter to finish): ");
     }
 
     if (students.indexOf(s) < 0) {
