@@ -22,8 +22,8 @@ public class Tutor extends Person {
 
     public Tutor(Scanner in){
         super(in);
-        this.ssn=Integer.parseInt(in.nextLine());
         this.bio=in.nextLine();
+        this.ssn=Integer.parseInt(in.nextLine());
         this.course=new Course(in);
     }
 
@@ -34,6 +34,7 @@ public class Tutor extends Person {
         out.println(ssn);
         course.save(out);
     }
+    
     public int getSSN() {
         return ssn;
     }
