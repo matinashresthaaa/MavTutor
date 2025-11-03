@@ -1,5 +1,7 @@
 package mdi;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import people.Tutor;
 public class MavTutor {
     private Menu menu;
     private List <?> view;
+    private File file;
 
     private ArrayList<Course> courses;
     private ArrayList<Student> students;
@@ -29,6 +32,7 @@ public class MavTutor {
         students=new ArrayList<>();
         tutors=new ArrayList<>();
         sessions=new ArrayList<>();
+        file=null;
 
     String title = "\nMAV TUTOR MENU\n";
     String prompt = "Selection? ";
@@ -62,14 +66,43 @@ public class MavTutor {
     menu.addMenuItem(new MenuItem("Quit", new Runnable() {
         public void run() { quit(); }
     }));
+
+    menu.addMenuItem(new MenuItem("New MavTutor", new Runnable() {
+    public void run() { newz(); }
+    }));
+    menu.addMenuItem(new MenuItem("Save As...", new Runnable() {
+    public void run() { saveAs(); }
+    }));
+    menu.addMenuItem(new MenuItem("Save", new Runnable() {
+    public void run() { save(); }
+    }));
+    menu.addMenuItem(new MenuItem("Open...", new Runnable() {
+    public void run() { open(); }
+    }));
         
     menu.run();
-
     }
 
     public static void main(String[] args){
         new MavTutor();   
     }
+
+    private void newz(){
+
+    }
+
+    private void save(){
+
+    }
+
+    private void saveAs(){
+
+    }
+
+    private void open(){
+
+    }
+
 
     private void quit(){
         menu.result=null;
