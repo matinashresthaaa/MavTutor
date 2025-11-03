@@ -71,8 +71,9 @@ public class Session {
      * @param student name of the student who is attending the session
      */
     public void addStudent(Student student){
+    if (student != null && !students.contains(student))
         students.add(student);
-    }
+}
 
     /**
      * returns the course, schedule,tutor and list of students attending the tutoring session
