@@ -89,6 +89,13 @@ public class MavTutor {
 
     private void newz(){
 
+        courses.clear();
+        students.clear();
+        tutors.clear();
+        sessions.clear();
+        file=null;
+
+        menu.result= new StringBuilder("\n All data erased. New MavTutor can be created.");
     }
 
     private void save(){
@@ -96,6 +103,8 @@ public class MavTutor {
     }
 
     private void saveAs(){
+        file=null;
+        save();
 
     }
 
