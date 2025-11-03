@@ -38,7 +38,7 @@ public class Course {
     this.number=in.nextInt();
    }
 
-   public void save(java.io.PrintStream out){
+   public void save(PrintStream out){
     out.println(dept);
     out.println(number);
    }
