@@ -1,6 +1,7 @@
 package mdi;
 
 import java.io.File;
+import java.io.PrintStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +100,44 @@ public class MavTutor {
     }
 
     private void save(){
+        if(file==null){
+            file=Menu.selectFile("\n Select a file",null,null);
+        }
+        
+        if(file==null){
+            menu.result.append("\n No file selected");
+            return;
+        }
+
+        try(PrintStream out=new PrintStream(file)){
+
+            out.println(courses.size());
+            for(Course c: courses){
+                try{
+                c.save(out);
+                }catch(InvalidCourseException e){
+                    out.println("Invalid course skipped "+e.getMessage());
+                }
+            }
+
+            out.println(students.size());
+            for(Student s: students){
+                s.save(out);
+            }
+
+            out.println(tutors.size());
+            for(Tutor t: tutors){
+                t.save(out);
+            }
+
+            out.println(sessions.size());
+            for(Session sess: sessions){
+                sess.save(out);
+            }
+            menu.result.append("\n Data saved successfully to "+file.getName());
+        }catch (Exception e){
+            menu.result.append("\n Error saving data: "+e.getMessage());
+        }
 
     }
 
