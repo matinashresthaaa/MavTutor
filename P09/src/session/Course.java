@@ -33,15 +33,14 @@ public class Course {
     this.number=number;
    }
 
-   public Course(Scanner in){
-    this.dept=in.nextLine();
-    this.number=in.nextInt();
-   }
-
-   public void save(PrintStream out){
+public Course(Scanner in) {
+    this.dept   = in.nextLine();
+    this.number = Integer.parseInt(in.nextLine().trim());
+}
+public void save(PrintStream out) {
     out.println(dept);
     out.println(number);
-   }
+}
 
    /**
     * returns the string version of course
