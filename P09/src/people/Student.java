@@ -39,8 +39,7 @@ public class Student extends Person{
         for(Course c :courses) c.save(out);
     }
 
-    public void addCourse(Course course){
-        if(!courses.contains(course));
+    public void addCourse(Course course) {
         courses.add(course);
     }
 
