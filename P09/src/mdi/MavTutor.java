@@ -101,46 +101,39 @@ public class MavTutor {
     }
 
     private void save(){
-        if(file==null){
-            file=Menu.selectFile("\n Select a file",null,null);
-        }
-        
-        if(file==null){
-            menu.result.append("\n No file selected");
-            return;
-        }
-
-        try(PrintStream out=new PrintStream(file)){
-
-            out.println(courses.size());
-            for(Course c: courses){
-                try{
-                c.save(out);
-                }catch(InvalidCourseException e){
-                    out.println("Invalid course skipped "+e.getMessage());
-                }
-            }
-
-            out.println(students.size());
-            for(Student s: students){
-                s.save(out);
-            }
-
-            out.println(tutors.size());
-            for(Tutor t: tutors){
-                t.save(out);
-            }
-
-            out.println(sessions.size());
-            for(Session sess: sessions){
-                sess.save(out);
-            }
-            menu.result.append("\n Data saved successfully to "+file.getName());
-        }catch (Exception e){
-            menu.result.append("\n Error saving data: "+e.getMessage());
-        }
-
+    if (file == null) {
+        file = Menu.selectFile("\n Select a file", null, null);
     }
+    if (file == null) {
+        menu.result.append("\n No file selected");
+        return;
+    }
+    try (PrintStream out = new PrintStream(file)) {
+        out.println(courses.size());
+        for (Course c : courses) {
+            c.save(out);
+        }
+
+        out.println(students.size());
+        for (Student s : students) {
+            s.save(out);
+        }
+
+        out.println(tutors.size());
+        for (Tutor t : tutors) {
+            t.save(out);
+        }
+
+        out.println(sessions.size());
+        for (Session sess : sessions) {
+            sess.save(out);
+        }
+
+        menu.result.append("\n Data saved successfully to ").append(file.getName());
+    } catch (Exception e) {
+        menu.result.append("\n Error saving data: ").append(e.getMessage());
+    }
+}
 
     private void saveAs(){
         file=null;
@@ -148,8 +141,43 @@ public class MavTutor {
 
     }
 
-    private void open() {
-    
+ private void open() {
+    file = Menu.selectFile("\nSelect a file to open", null, null);
+    if (file == null) {
+        menu.result.append("\nNo file selected.");
+        return;
+    }
+
+    try (Scanner in = new Scanner(file)) {
+        ArrayList<Course> newCourses = new ArrayList<>();
+        ArrayList<Student> newStudents = new ArrayList<>();
+        ArrayList<Tutor> newTutors = new ArrayList<>();
+        ArrayList<Session> newSessions = new ArrayList<>();
+
+        int n;
+
+        n = Integer.parseInt(in.nextLine().trim());
+        for (int i = 0; i < n; ++i) newCourses.add(new Course(in));
+
+        n = Integer.parseInt(in.nextLine().trim());
+        for (int i = 0; i < n; ++i) newStudents.add(new Student(in));
+
+        n = Integer.parseInt(in.nextLine().trim());
+        for (int i = 0; i < n; ++i) newTutors.add(new Tutor(in));
+
+        n = Integer.parseInt(in.nextLine().trim());
+        for (int i = 0; i < n; ++i) newSessions.add(new Session(in));
+
+        courses = newCourses;
+        students = newStudents;
+        tutors = newTutors;
+        sessions = newSessions;
+
+        menu.result.append("\nData loaded successfully from ").append(file.getName());
+    } catch (Exception e) {
+        menu.result.append("\nError opening file: ").append(e.getMessage());
+        newz();
+    }
 }
 
 
@@ -240,56 +268,54 @@ public class MavTutor {
     }
 }
 
-    private void newSession(){
-        if(courses.isEmpty() || tutors.isEmpty() || students.isEmpty()){
-           menu.result= new StringBuilder("\n Error. No course,tutor,student exists");
-            return; 
-        }
-
-        Integer cIdx=Menu.selectItemFromList("\n Select course index: ",courses);
-        if(cIdx == null || cIdx < 0 || cIdx >= courses.size()) {
-            menu.result = new StringBuilder("\nInvalid Selection");
+    private void newSession() {
+    try {
+        if (courses.isEmpty()) {
+            menu.result.append("Please define a course first!");
             return;
         }
-        Course course=courses.get(cIdx);
-
-        Integer tIdx=Menu.selectItemFromList("\n Select tutor index: ",tutors);
-        if (tIdx == null || tIdx < 0 || tIdx >= tutors.size()) {
-            menu.result = new StringBuilder("\nInvalid Selection");
+        if (tutors.isEmpty()) {
+            menu.result.append("Please define a tutor first!");
             return;
+        }
+        if (students.isEmpty()) {
+            menu.result.append("Please define a student first!");
+            return;
+        }
+        Integer i1 = Menu.selectItemFromList("Select course: ", courses);
+        if (i1 == null) return;
+        Course course = courses.get(i1);
+
+        Integer i2 = Menu.selectItemFromList("Select tutor: ", tutors);
+        if (i2 == null) return;
+        Tutor tutor = tutors.get(i2);
+
+        if (!tutor.getCourse().equals(course)) {
+            menu.result.append("Error adding Session: " + tutor + " lacks expertise in " + course);
+            return;
+        }
+
+        Session session = new Session(course, tutor);
+        session.setSchedule(
+            Menu.getString("Enter date (YYYY-MM-DD): "),
+            Menu.getString("Enter starting time (HH:mm): "),
+            Menu.getInt("Enter duration in minutes: ")
+        );
+
+        Integer index = null;
+        int studentsAdded = 0;
+        do {
+            index = Menu.selectItemFromList("Select student to add: ", students);
+            if (index != null) session.addStudent(students.get(index));
+        } while (index != null && students.size() > ++studentsAdded);
+
+        sessions.add(session);
+        menu.result.append("Added " + session);
+    } catch (Exception e) {
+        menu.result.append("Error adding Session: " + e.getMessage());
     }
-    Tutor tutor = tutors.get(tIdx);
-
-    Session session = new Session(course, tutor);
-
-    String date = Menu.getString("Date: ");          // e.g., 2025-10-27
-    String time = Menu.getString("Start time: ");    // e.g., 14:00
-    Integer dur  = Menu.getInt("Duration (minutes): ");
-    session.setSchedule(date, time, dur);
-
-     while (true) {
-        Integer sIdx = Menu.selectItemFromList("\n Select student index: ", students);
-        if (sIdx == null){
-          sessions.add(session);
-          menu.result=new StringBuilder("\nSession added: "+session);
-        }
-
-        if (sIdx < 0 || sIdx >= students.size()) {
-            menu.result = new StringBuilder("\nInvalid Selection");
-            return;
-        }
-        session.addStudent(students.get(sIdx));
-
-        String more = Menu.getString("Select another student (Enter to finish): ");
-        if (more == null || more.isEmpty()){
-            sessions.add(session);
-            menu.result = new StringBuilder("\nSession added: " + session);
-            return;
-        }
-
-    }
-
-    }
+    selectView(sessions);
+}
 
     private void selectView(List <?> list){
         this.view=list;
