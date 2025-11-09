@@ -8,6 +8,9 @@ import java.io.PrintStream;
 
 import people.Tutor;
 import people.Student;
+import rating.Rateable;
+import rating.Rating;
+
 
 /**
  * Stores information about the tutoring session which includes the course, tutor, schedule and list of students.
@@ -17,11 +20,12 @@ import people.Student;
  * @license.agreement Gnu General Public License 3.0
  */
 
-public class Session {
+public class Session implements Rateable<Rating> {
     private Course course;
     private DateRange dates;
     private Tutor tutor;
     private List <Student> students= new ArrayList<>();
+    private List <Rating> ratings=new ArrayList<>();
 
     /**
      * Creates a new session for the course
@@ -96,5 +100,27 @@ public class Session {
         sb.append("\n");
         return sb.toString();
     }    
+
+
+@Override
+public void addRating(Rating rating){
+    if(rating !=null)
+    ratings.add(rating);
 }
 
+@Override
+public double getAverageRating(){
+    if(ratings.isEmpty())return Double.NaN;
+    double sum=0.0;
+    for(Rating r:ratings)
+    sum+=r.getStars();
+    return sum/ratings.size();
+}
+
+@Override 
+public Rating[]getRatings(){
+    return ratings.toArray(new Rating[0]);
+}
+
+
+}
