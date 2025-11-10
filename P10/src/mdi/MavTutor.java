@@ -16,6 +16,10 @@ import session.InvalidCourseException;
 
 import people.Student;
 import people.Tutor;
+import people.Person;
+
+import rating.Rateable;
+import rating.Comment;
 
 
 public class MavTutor {
