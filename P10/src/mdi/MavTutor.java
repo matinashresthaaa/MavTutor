@@ -381,7 +381,19 @@ private void review(List<? extends Rateable> list){
         menu.result.append("\n Review not available");
         return;
     }
+    Integer select =Menu.selectItemFromList("Select an option to review: ", list);
+    if (select == null) return;
+
+    Rateable choice= list.get(select);
+    double avg= choice.getAverageRating();
+
+    if (Double.isNaN(avg)) {
+        menu.result.append("\nAverage rating: NaN (no ratings yet)");
+    } else {
+        menu.result.append("\nAverage rating: ").append(String.format("%.2f", avg));  
 
 }
-
+Person user=login();
 }
+}
+
