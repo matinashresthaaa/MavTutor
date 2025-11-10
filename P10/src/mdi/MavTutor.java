@@ -19,6 +19,7 @@ import people.Tutor;
 import people.Person;
 
 import rating.Rateable;
+import rating.Rating;
 import rating.Comment;
 
 
@@ -374,8 +375,9 @@ private Person login(){
     } else {
         return null;
 
+    }
 }
-}
+
 private void review(List<? extends Rateable> list){
     if(list==null || list.isEmpty()){
         menu.result.append("\n Review not available");
@@ -385,15 +387,33 @@ private void review(List<? extends Rateable> list){
     if (select == null) return;
 
     Rateable choice= list.get(select);
+
     double avg= choice.getAverageRating();
 
     if (Double.isNaN(avg)) {
         menu.result.append("\nAverage rating: NaN (no ratings yet)");
     } else {
         menu.result.append("\nAverage rating: ").append(String.format("%.2f", avg));  
-
 }
+
 Person user=login();
+
+if (user != null) {
+    int stars = Menu.getInt("Stars (1–5): ");
+    if (stars < 1) stars = 1;
+    if (stars > 5) stars = 5;
+
+    String text = Menu.getString("Please leave a review: ");
+    Comment comment = new Comment(text == null ? "" : text, user, null);
+    Rating rating = new Rating(stars, comment);
+
+    choice.addRating(rating);
+
+     double newAvg = choice.getAverageRating();
+     menu.result.append("\nNew average: ")
+                       .append(Double.isNaN(newAvg) ? "NaN" : String.format("%.2f", newAvg));
+            menu.result.append("\nThank you for your rating!");
+}
 }
 }
 
