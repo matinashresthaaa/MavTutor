@@ -53,6 +53,7 @@ public class MavTutor {
     menu.addMenuItem(new MenuItem("Create Session", new Runnable() {
         public void run() { newSession(); }
     }));
+
     menu.addMenuItem(new MenuItem("View Courses", new Runnable() {
         public void run() { selectView(courses); }
     }));
@@ -65,6 +66,17 @@ public class MavTutor {
     menu.addMenuItem(new MenuItem("View Sessions", new Runnable() {
         public void run() { selectView(sessions); }
     }));
+
+ menu.addMenuItem(new MenuItem("Review a Student", new Runnable(){ 
+    public void run(){ review(students); }
+    }));
+    menu.addMenuItem(new MenuItem("Review a Tutor",   new Runnable(){ 
+        public void run(){ review(tutors); }
+    }));
+    menu.addMenuItem(new MenuItem("Review a Session", new Runnable(){ 
+        public void run(){ review(sessions); }
+    }));
+
     menu.addMenuItem(new MenuItem("Quit", new Runnable() {
         public void run() { quit(); }
     }));
