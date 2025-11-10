@@ -62,26 +62,20 @@ public class Person implements Rateable{
     }
 
     @Override
-    public void addRating(Rating rating){
+    public void addRating(Rating rating) {
         ratings.add(rating);
     }
-
     @Override
-    public double getAverageRating(){
-        if(ratings.isEmpty()){
-            return 0.0;
-        }
-        double sum=0.0;
-        for(Rating r : ratings){
-            sum+= r.getStars();
-        }
-        return sum/ratings.size();
+    public double getAverageRating() {
+        double sum = 0;
+        for(Rating r : ratings) sum += r.getStars();
+        return sum / ratings.size();
+    }
+    @Override
+    public Rating[] getRatings() {
+        return ratings.toArray(new Rating[ratings.size()]);
+    }
 
     }
 
-    @Override
-    public Rating[] getRatings(){
-        return ratings.toArray(new Rating[0]);
-    }
-}
     
