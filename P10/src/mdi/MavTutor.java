@@ -100,9 +100,9 @@ public class MavTutor {
     menu.addMenuItem(new MenuItem("Open...", new Runnable() {
     public void run() { open(); }
     }));
-        
-    menu.run();
     dirty=false;
+    menu.run();
+    
     }
 
     public static void main(String[] args){
@@ -229,6 +229,7 @@ private void open() {
             Course c= new Course(dept,num);
             if(courses.indexOf(c)<0){
                 courses.add(c);
+                dirty=true;
                 menu.result.append("\nCourse added: "+c);   
             }
             else{
@@ -262,6 +263,7 @@ private void open() {
         Tutor t= new Tutor(name,email,ssn,bio,course);
         if(tutors.indexOf(t)<0){
             tutors.add(t);
+            dirty=true;
             menu.result=new StringBuilder("\n Tutor added: "+t);
         }
         else{
@@ -298,6 +300,7 @@ private void open() {
 
     if (students.indexOf(s) < 0) {
         students.add(s);
+        dirty=true;
         menu.result = new StringBuilder("\nStudent added: " + s);
     } else {
         menu.result = new StringBuilder("\nStudent already exists: " + s);
@@ -346,6 +349,7 @@ private void open() {
         } while (index != null && students.size() > ++studentsAdded);
 
         sessions.add(session);
+        dirty=true;
         menu.result.append("Added " + session);
     } catch (Exception e) {
         menu.result.append("Error adding Session: " + e.getMessage());
@@ -432,9 +436,88 @@ if (user != null) {
      menu.result.append("\nNew average: ")
                        .append(Double.isNaN(newAvg) ? "NaN" : String.format("%.2f", newAvg));
             menu.result.append("\nThank you for your rating!");
-            dirty=true;
+            dirty=true;  
+}
+Rating[] ratings = choice.getRatings();
+    if (ratings == null || ratings.length == 0) return;
+
+    String[] labels = new String[ratings.length];
+    for (int i = 0; i < ratings.length; i++) {
+        String head = ratings[i].getStars() + "★";
+        Comment r = ratings[i].getReview();
+        String txt = (r == null) ? "" : r.toString();
+        if (txt.length() > 40) txt = txt.substring(0, 37) + "...";
+        labels[i] = head + (txt.isEmpty() ? "" : " — " + txt);
+    }
+
+    Integer ridx = Menu.selectItemFromArray("Select a rating: ", labels);
+    if (ridx == null) return;
+
+    Comment current = ratings[ridx].getReview();
+    if (current == null) return;
+
+    menu.result.append("\nComments\n========\n\n");
+
+boolean done = false;
+while (!done) {
+    printExpandedComments(current, 0);          // only here
+
+    boolean canUp   = current.getInReplyTo() != null;
+    boolean canDown = current.numReplies() > 0;
+
+    StringBuilder prompt = new StringBuilder("\n(R)eply");
+    if (canDown) prompt.append(" (D)own");
+    if (canUp)   prompt.append(" (U)p");
+    prompt.append(" (M)ain menu: ");
+
+    String action = Menu.getString(prompt.toString());
+    if (action == null || action.isEmpty()) return;
+
+    switch (Character.toUpperCase(action.charAt(0))) {
+        case 'R': {
+            Person who = login();
+            if (who == null) { menu.result.append("\nNo login. Cannot reply.\n"); break; }
+            String msg = Menu.getString("Reply text: ");
+            if (msg != null && !msg.isEmpty()) { current.addReply(msg, who); dirty = true; }
+            break;
+        }
+        case 'U': {
+            if (!canUp) { menu.result.append("\nAlready at top.\n"); break; }
+            current = current.getInReplyTo();
+            break;
+        }
+        case 'D': {
+            if (!canDown) { menu.result.append("\nNo replies to open.\n"); break; }
+            int idx = Menu.getInt("Reply index [0.." + (current.numReplies()-1) + "]: ");
+            if (idx >= 0 && idx < current.numReplies()) current = current.getReply(idx);
+            else menu.result.append("\nInvalid index.\n");
+            break;
+        }
+        case 'M': done = true; break;
+        default:  break;
+    }
 }
 }
+
+
+private void printExpandedComments(Comment c, int level) {
+    if (c == null) return;
+    printIndented(c.toString(), level);
+    menu.result.append("\n");
+    for (int i = 0; i < c.numReplies(); ++i) {
+        printExpandedComments(c.getReply(i), level + 1);
+    }
 }
+
+private void printIndented(String multiline, int level) {
+    if (multiline == null) return;
+    String[] lines = multiline.split("\n");
+    for (String s : lines) {
+        menu.result.append("  ".repeat(level)).append(s).append("\n");
+    }
+}
+}
+
+
 
 
