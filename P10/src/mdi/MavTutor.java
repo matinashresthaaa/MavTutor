@@ -377,6 +377,10 @@ private Person login(){
 }
 }
 private void review(List<? extends Rateable> list){
+    if(list==null || list.isEmpty()){
+        menu.result.append("\n Review not available");
+        return;
+    }
 
 }
 
