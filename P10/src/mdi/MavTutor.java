@@ -354,4 +354,26 @@ public String toString() {
     return Menu.listToString(title, view,'•');
 }
 
+private Person login(){
+    String [] options =new String[]{"Tutor","Student","None"};
+    Integer choice=Menu.selectItemFromArray("Login as: ",options);
+    if (choice == null) return null;
+
+    if (choice == 0) {
+        if (tutors.isEmpty()) return null;
+        Integer i = Menu.selectItemFromList("Select tutor: ", tutors);
+        return (i == null) ? null : tutors.get(i);
+    } else if (choice == 1) {
+        if (students.isEmpty()) return null;
+        Integer i = Menu.selectItemFromList("Select student: ", students);
+        return (i == null) ? null : students.get(i);
+    } else {
+        return null;
+
+}
+}
+private void review(List<? extends Rateable> list){
+
+}
+
 }
