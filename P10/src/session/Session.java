@@ -20,7 +20,7 @@ import rating.Rating;
  * @license.agreement Gnu General Public License 3.0
  */
 
-public class Session implements Rateable<Rating> {
+public class Session implements Rateable {
     private Course course;
     private DateRange dates;
     private Tutor tutor;
