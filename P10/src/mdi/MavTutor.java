@@ -1,6 +1,7 @@
 package mdi;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -27,6 +28,7 @@ public class MavTutor {
     private Menu menu;
     private List <?> view;
     private File file;
+    private boolean dirty;
 
     private ArrayList<Course> courses;
     private ArrayList<Student> students;
@@ -100,6 +102,7 @@ public class MavTutor {
     }));
         
     menu.run();
+    dirty=false;
     }
 
     public static void main(String[] args){
@@ -107,14 +110,14 @@ public class MavTutor {
     }
 
     private void newz(){
-
+        if(safeToDiscardData()) {
         courses.clear();
         students.clear();
         tutors.clear();
         sessions.clear();
         file=null;
-
-        menu.result= new StringBuilder("\n All data erased. New MavTutor can be created.");
+        dirty = false;
+        }
     }
 
     private void save(){
@@ -145,6 +148,7 @@ public class MavTutor {
         for (Session sess : sessions) {
             sess.save(out);
         }
+        dirty=false;
 
         menu.result.append("\n Data saved successfully to ").append(file.getName());
     } catch (Exception e) {
@@ -153,54 +157,69 @@ public class MavTutor {
 }
 
     private void saveAs(){
+        File temp=file;
         file=null;
         save();
+        if(dirty) file = temp;
 
     }
 
- private void open() {
-    file = Menu.selectFile("\nSelect a file to open", null, null);
-    if (file == null) {
-        menu.result.append("\nNo file selected.");
-        return;
+private void open() {
+        if(safeToDiscardData()) {
+            dirty = false;
+            file = Menu.selectFile("Open file: ", null, null);
+            if(file != null) {
+                try(Scanner in = new Scanner(file)) {
+                    courses  = new ArrayList<>();
+                    int size = in.nextInt(); in.nextLine();
+                    while(size-- > 0)
+                        courses.add(new Course(in));
+                    
+                    students = new ArrayList<>();
+                    size = in.nextInt(); in.nextLine();
+                    while(size-- > 0)
+                        students.add(new Student(in));
+
+                    tutors   = new ArrayList<>();
+                    size = in.nextInt(); in.nextLine();
+                    while(size-- > 0)
+                        tutors.add(new Tutor(in));
+
+                    sessions = new ArrayList<>();
+                    size = in.nextInt(); in.nextLine();
+                    while(size-- > 0)
+                        sessions.add(new Session(in));
+                } catch(IOException e) {
+                    menu.result.append("\nERROR: Unable to open file " + file + "\n  " + e);
+                    newz(); // Discard any partial data that was read
+                }
+            }
+        }
     }
-
-    try (Scanner in = new Scanner(file)) {
-        ArrayList<Course> newCourses = new ArrayList<>();
-        ArrayList<Student> newStudents = new ArrayList<>();
-        ArrayList<Tutor> newTutors = new ArrayList<>();
-        ArrayList<Session> newSessions = new ArrayList<>();
-
-        int n;
-
-        n = Integer.parseInt(in.nextLine().trim());
-        for (int i = 0; i < n; ++i) newCourses.add(new Course(in));
-
-        n = Integer.parseInt(in.nextLine().trim());
-        for (int i = 0; i < n; ++i) newStudents.add(new Student(in));
-
-        n = Integer.parseInt(in.nextLine().trim());
-        for (int i = 0; i < n; ++i) newTutors.add(new Tutor(in));
-
-        n = Integer.parseInt(in.nextLine().trim());
-        for (int i = 0; i < n; ++i) newSessions.add(new Session(in));
-
-        courses = newCourses;
-        students = newStudents;
-        tutors = newTutors;
-        sessions = newSessions;
-
-        menu.result.append("\nData loaded successfully from ").append(file.getName());
-    } catch (Exception e) {
-        menu.result.append("\nError opening file: ").append(e.getMessage());
-        newz();
-    }
-}
 
 
     private void quit(){
+        if(safeToDiscardData())
         menu.result=null;
     }
+
+    private boolean safeToDiscardData() {
+        if(!dirty) return true;
+        System.out.print("\nWARNING: Unsaved data will be lost!");
+        while(true) {
+            Character c = Menu.getChar("(S)ave, (D)iscard, or (A)bort? ");
+            if(c == null) break;
+            switch(c) {
+                case 's', 'S' -> { save();        }
+                case 'd', 'D' -> { dirty = false; }
+                case 'a', 'A' -> { break;         }
+                default       -> { continue;      }
+            }
+            break;
+        }
+        return !dirty;
+    }
+
 
     private void newCourse(){
         String dept= Menu.getString("Department: ");
@@ -413,7 +432,9 @@ if (user != null) {
      menu.result.append("\nNew average: ")
                        .append(Double.isNaN(newAvg) ? "NaN" : String.format("%.2f", newAvg));
             menu.result.append("\nThank you for your rating!");
+            dirty=true;
 }
 }
 }
+
 
