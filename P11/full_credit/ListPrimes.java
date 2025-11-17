@@ -12,6 +12,11 @@ public class ListPrimes{
     int numThreads = Integer.parseInt(args[2]);
 
     Primes primes= new Primes();
+    if (numThreads == 0) {
+            primes = new Primes();              // single-threaded
+        } else {
+            primes = new ThreadedPrimes(); 
+        }
 
     primes.search(begin,end,numThreads);
 
