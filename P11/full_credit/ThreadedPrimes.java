@@ -26,5 +26,21 @@ public class ThreadedPrimes extends Primes{
             begin += delta;
 
     }
+    for (Thread t : threads) {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+
+                }
+    }
+}
+
+     private final Object mutex = new Object();
+
+    @Override
+    protected void addPrime(long prime,int threadID){
+        synchronized(mutex){
+        super.addPrime(prime, threadID);
+        }
     }
 }
