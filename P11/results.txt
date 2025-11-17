@@ -1,102 +1,103 @@
 Full Credit
 ===========
 
-1. Number of cores available to my test environment (in bash use the ``nproc`` command, otherwise check your system control panel): 
+1. Number of cores available to my test environment (in bash use the ``nproc`` command, otherwise check your system control panel): 10
 
-2. Primes range for my machine, begin to end (must run at least 45 seconds "real" / wall time with a single thread): 
+2. Primes range for my machine, begin to end (must run at least 45 seconds "real" / wall time with a single thread): 0 to 160_000_000
+
 
 3. Timing measured on my machine with EXACTLY the same begin and end values for each!
 
 With 1 thread:
 
-real 
-user 
-sys  
+real  45.654s
+user 49.26s
+sys  0.34s
 
 
 With 2 threads:
 
-real 
-user 
-sys  
+real 30.181s
+user 51.23s
+sys  0.38s
 
 
 With 3 threads:
 
-real	
-user	
-sys	
+real  22.446s
+user  53.60s
+sys  0.34s
 
 
 With 4 threads:
 
-real	
-user	
-sys	
+real	17.946s
+user	54.59s
+sys	0.34s
 
 
 With 5 threads:
 
-real	
-user	
-sys	
+real	15.938s
+user	59.81s
+sys	0.41s
 
 
 With 6 threads:
 
-real	
-user	
-sys	
+real	14.918s
+user	67.3s
+sys	0.49s
 
 
 With 7 threads:
 
-real	
-user	
-sys	
+real	14.843s
+user	75.69s
+sys	0.63s
 
 
 With 8 threads:
 
-real	
-user	
-sys	
+real	13.881s
+user	82.20s
+sys	0.89s
 
 
 With 16 threads:
 
-real	
-user	
-sys	
+real	12.565s
+user	101.34s
+sys	1.47s
 
 
 With 32 threads:
 
-real	
-user	
-sys	
+real	12.735s
+user	101.68s
+sys     1.97s
 
 
 With 64 threads:
 
-real	
-user	
-sys	
+real	12.958s
+user	100.69s
+sys	2.42s
 
 
 QUESTION: After threading is added, is the order of the prime numbers listed the same or does it vary? Why?
-
+The sequence of prime numbers can be random when using threads. This is because each thread operates on separate parts of the number range and the portions can complete at different times due to their differences in work load. Without specific instructions to merge their results in order, the results can be in a random sequence. This is not the case in a single-thread program where results are predictably organized in a sequence.
 
 
 
 QUESTION: Does adding more threads continue to speed up the program? Do more threads ever slow down the program slightly?  Why or why not?
-
+Performance is improved at first when multiple threads are added to the program because there is an increase in parallel work from different CPU cores. That said, there is a limit to the number of threads that can be accommodated. If the number of threads exceeds the number of cores available, there is a decrease in the program’s execution speed as a result of what is referred to as context switching overhead.
 
 
 
 QUESTION: Does adding more threads increase the "system load" (sys), or is it constant regardless of the number of threads?  Why?
 
-
+Increased thread counts increases the load on the system. This is because there is an increase in CPU overhead as thread management, scheduling, and context switching, are handed over to the operating system. A single thread incurs low overhead, but the system overhead continues to increase when more threads are added.
 
 Bonus
 =====
