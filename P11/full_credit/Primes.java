@@ -1,6 +1,7 @@
 import java.util.Map;
 import java.util.TreeMap;
 
+
 public class Primes{
     private long maxPrime;
     private Map<Long, Integer> primes;
@@ -41,9 +42,7 @@ public class Primes{
         }
         
     protected void findPrimes(int threadID,long begin, long end){
-         qlogger.Qlogger.log(
-            "Thread " + threadID + " searching from " + begin + " to " + end
-        );
+         qlogger.Qlogger.log("Thread " + threadID + " searching from " + begin + " to " + end);
 
         for (long i = begin; i < end; i++) {
             if (isPrime(i)) {
