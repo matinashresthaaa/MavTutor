@@ -30,5 +30,18 @@ public class PooledPrimes implements ThreadedPrimes{
 
             }
         }
-        }   
+        } 
+        private final Object sliceMutex = new Object();
+
+        public void searchWorker(int threadID){
+            while (true) {
+            long slice = nextSlice();
+            if (slice < 0) return;
+
+            long sliceEnd = slice + sliceSize;
+            if (sliceEnd > endSlice) sliceEnd = endSlice;
+
+            findPrimes(threadID, slice, sliceEnd);
+            }
+        }
     }
