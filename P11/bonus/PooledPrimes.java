@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class PooledPrimes implements ThreadedPrimes{
+public class PooledPrimes extends ThreadedPrimes{
     private long currentSlice;
     private long sliceSize;
     private long endSlice;
