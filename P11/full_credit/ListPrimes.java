@@ -11,9 +11,9 @@ public class ListPrimes{
     long end = Long.parseLong(args[1].replaceAll("_", ""));
     int numThreads = Integer.parseInt(args[2]);
 
-    Primes primes= new Primes();
+    Primes primes;
     if (numThreads == 0) {
-            primes = new Primes();              // single-threaded
+            primes = new Primes();             
         } else {
             primes = new ThreadedPrimes(); 
         }
