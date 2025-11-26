@@ -32,18 +32,21 @@ public class RandomLong {
     }
 
     public static void main(String[] args) {
-        int d;
+        int dig;
         if (args.length == 0) {
-            d = 10;
+            dig= 10;
+        }else if(args.length > 1){
+            System.out.println("Only one argument needed, taking the first one.");
+            dig = Integer.parseInt(args[0]);
         }
 
         else {
-            d = Integer.parseInt(args[0]);
+            dig = Integer.parseInt(args[0]);
         }
 
-        RandomLong rl = new RandomLong(d);
+        RandomLong rl = new RandomLong(dig);
         long value = rl.nextLong();
-        System.out.println("A long with " + d + " digits is " + value);
+        System.out.println("A long with " + dig + " digits is " + value);
     
 
         }
