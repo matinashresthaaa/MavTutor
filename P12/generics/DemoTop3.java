@@ -23,6 +23,22 @@ public class DemoTop3 {
 
         System.out.println("\nThe top 3 values are:");
         System.out.println(top);
+           Top3<Quadratic> topQuadratics = new Top3<>();
+        Quadratic.x = rand.nextDouble() * 10;
+        System.out.printf("\nFor x=%.4f and the following quadratic equations:\n", Quadratic.x);
 
-}
+        for (int i = 0; i < 8; i++) {
+            double a = (rand.nextDouble() * 10) - 5;
+            double b = (rand.nextDouble() * 10) - 5;
+            double c = (rand.nextDouble() * 10) - 5;
+
+            Quadratic q = new Quadratic(a, b, c);
+            System.out.println(q);
+            topQuadratics.add(q);
+        }
+
+        System.out.println("\nThe top 3 quadratic equations are:");
+        System.out.println(topQuadratics);
+    }
+
 }
